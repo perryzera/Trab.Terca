@@ -1,0 +1,70 @@
+table {
+    width: 75%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 30px auto;
+}
+
+th, td {
+    padding: 10px 15px;
+    text-align: left;
+}
+
+th {
+  background-color: #f9f9f9;
+    color: #000000;
+    text-transform: uppercase;
+}
+
+tr {
+    border: 1px solid rgba(153, 153, 153, 0.384);
+}
+
+
+tr:nth-child(-n + 4) td:first-child {
+    border-left: 4px solid #3175c2;
+}
+
+tr:nth-child(n + 5):nth-child(-n + 6) td:first-child {
+    border-left: 4px solid #c27e31;
+}
+
+tr:nth-child(n + 7):nth-child(-n + 12) td:first-child {
+    border-left: 4px solid #49c231;
+}
+
+tr:nth-child(n + 17):nth-child(-n + 20) td:first-child {
+    border-left: 4px solid #c23131;
+}
+
+tr:hover {
+    background-color: #ddd;
+  }
+
+.legenda {
+    text-align: left;
+    margin: 230px;
+    margin-top: 20px; 
+    font-weight: 200;
+    color: rgb(0, 0, 0); 
+}
+  
+.legenda img {
+    width: 20px;
+    vertical-align: middle; 
+    margin: 0 5px;
+}
+
+@media(max-width: 700px){
+    td {
+        font-size: 12px;
+
+    }
+
+}
+

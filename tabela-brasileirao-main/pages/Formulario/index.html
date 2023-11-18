@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../globals.css">
+  <link rel="stylesheet" href="./styles.css">
+  <!-- FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&display=swap" rel="stylesheet">
+
+<!-- ADD ID AO FORM -->
+<!-- ADD ID A TODOS OS INPUT -->
+<!-- TROCADO BOTAO "INPUT" POR "BUTTOM" -->
+<!-- ADD FUNÇÃO PARA SALVAR DADOS -->
+<!-- ADD CHAVE PARA CADA INPUT -->
+<!-- ADD SCRIPTS DO JS -->
+<!-- ADD CONSTANTE PARA CADA ID -->
+<!-- ADD FUNÇÃO PARA SALVAR OS DADOS CRIADOS -->
+<!-- ADD IF/ELSE PARA SUBSTITUIR OS DADOS NOVOS -->
+<!-- CRIADO "tabela.html" PARA EXIBIÇÃO DOS DADOS -->
+<!-- ADD CONDIÇÃO PARA PREENCHIMENTO OBRIGATORIO DOS CAMPOS -->
+
+
+  <title>Campeonato Brasileiro | Tabela</title>
+</head>
+<body>
+  <header>
+    <nav>
+        <a href="../index.html"><img src="../../assets/logo.png" alt="Logo Brasileirao"></a>
+        <ul>
+          <li><a href="../Tabela/index.html">Tabela</a></li>
+          <li><a href="../Catalogo/index.html">Times</a></li>
+          <li><a href="../Formulario/index.html">Cadastro Rodada</a></li>
+        </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="container">
+      
+      <h1>Cadastro da Rodada</h1>
+    <form action="processar_cadastro.php" method="post" id="form">
+      <div class="input-container">
+        
+        <div>
+          <h2>Equipe da Casa</h2>
+          <label for="nome_casa">Nome</label>
+          <input class="text-input" type="text" id="nome_casa" name="nome_casa" required><br><br>
+          
+          <label for="gols_casa">Gols</label>
+          <input class="text-input" type="number" id="gols_casa" name="gols_casa" required><br><br>
+
+          <label for="chutes_casa">Chutes a Gols</label>
+          <input class="text-input" type="number" id="chutes_casa" name="chutes_casa" required><br><br>
+          
+          <label for="escanteio_casa">Escanteio</label>
+          <input class="text-input" type="number" id="escanteio_casa" name="escanteio_casa" required><br><br>
+
+          <label for="faltas_casa">Faltas</label>
+          <input class="text-input" type="number" id="faltas_casa" name="faltas_casa" required><br><br>
+
+          <label for="amarelo_casa">Cartão Amarelo</label>
+          <input class="text-input" type="number" id="amarelo_casa" name="amarelo_casa" required><br><br>
+
+          <label for="vermelho_casa">Cartão Vermelho</label>
+          <input class="text-input" type="number" id="vermelho_casa" name="vermelho_casa" required><br><br>
+        </div>
+
+        <div>
+          <h2>Equipe Visitante</h2>
+          <label for="nome_vis">Nome</label>
+          <input class="text-input" type="text" id="nome_vis" name="nome_vis" required><br><br>
+          
+          <label for="gols_vis">Gols</label>
+          <input class="text-input" type="number" id="gols_vis" name="gols_vis" required><br><br>
+
+          <label for="chutes_vis">Chutes a Gols</label>
+          <input class="text-input" type="number" id="chutes_vis" name="chutes_vis" required><br><br>
+          
+          <label for="escanteio_vis">Escanteio</label>
+          <input class="text-input" type="number" id="escanteio_vis" name="escanteio_vis" required><br><br>
+
+          <label for="faltas_vis">Faltas</label>
+          <input class="text-input" type="number" id="faltas_vis" name="faltas_vis" required><br><br>
+
+          <label for="amarelo_vis">Cartão Amarelo</label>
+          <input class="text-input" type="number" id="amarelo_vis" name="amarelo_vis" required><br><br>
+
+          <label for="vermelho_vis">Cartão Vermelho</label>
+          <input class="text-input" type="number" id="vermelho_vis" name="vermelho_vis" required><br><br>
+        </div>
+      </div>
+      <div class="rodada">
+        <label for="rodada">Número da Rodada</label>
+        <input class="text-input" type="number" id="rodada" name="rodada" required>
+      </div>
+        <button class="botao" type="button"  value="Cadastrar" onclick="salvarDados()"> Cadastrar </button>
+    </form>
+  </section>
+      <a href="./tabela.html">Ver Tabela</a>
+  </main>
+  <script>
+    const form = document.getElementById('form');
+    const nome_casa = document.getElementById('nome_casa');
+    const gols_casa = document.getElementById('gols_casa');
+    const chutes_casa = document.getElementById('chutes_casa');
+    const escanteio_casa = document.getElementById('escanteio_casa');
+    const faltas_casa = document.getElementById('faltas_casa');
+    const amarelo_casa = document.getElementById('amarelo_casa');
+    const vermelho_casa = document.getElementById('vermelho_casa');
+    const nome_vis = document.getElementById('nome_vis');
+    const gols_vis = document.getElementById('gols_vis');
+    const chutes_vis = document.getElementById('chutes_vis');
+    const escanteio_vis = document.getElementById('escanteio_vis');
+    const faltas_vis = document.getElementById('faltas_vis');
+    const amarelo_vis = document.getElementById('amarelo_vis');
+    const vermelho_vis = document.getElementById('vermelho_vis');
+    const rodada = document.getElementById('rodada');
+    var dados = JSON.parse(localStorage.getItem('dados')) || [];
+    const key = new URLSearchParams(window.location.search).get('chave');
+
+    function salvarDados(){
+        let novoNomeCasa = nome_casa.value;
+        if (novoNomeCasa === "" && nome_casa.type === "text"){
+        alert("O Nome da Equipe da Casa é obrigatório.");
+        return;
+      } 
+        let novoGolsCasa = gols_casa.value;
+        if (novoGolsCasa === "" && gols_casa.type === "number"){
+        alert("O campo Gols da Casa é obrigatório.");
+        return;
+      }
+        let novoChutesCasa = chutes_casa.value;
+        if (novoChutesCasa === "" && chutes_casa.type === "number"){
+        alert("O campo Chutes da Casa é obrigatório.");
+        return;
+      }
+        let novoEscanteioCasa = escanteio_casa.value;
+        if (novoEscanteioCasa === "" && escanteio_casa.type === "number")
+        {alert("O campo Escanteios da Casa é obrigatório.");
+        return;
+      }
+        let novoFaltasCasa = faltas_casa.value;
+        if (novoFaltasCasa === "" && faltas_casa.type === "number")
+        {alert("O campo Faltas da Casa é obrigatório.");
+        return;
+      }
+        let novoAmareloCasa = amarelo_casa.value;
+        if (novoAmareloCasa === "" && amarelo_casa.type === "number")
+        {alert("O campo Cartões Amarelos da Casa é obrigatório.");
+        return;
+      }
+        let novoVermelhoCasa = vermelho_casa.value;
+        if (novoVermelhoCasa === "" && vermelho_casa.type === "number")
+        {alert("O campo Cartões Vermelhos da Casa obrigatório.");
+        return;
+      }
+        let novoNomeVis = nome_vis.value;
+        if (novoNomeVis === "" && nome_vis.value === "text")
+        {alert("O Nome da Equipe Visitante é obrigatório.");
+        return;
+      }
+        let novoGolsVis = gols_vis.value;
+        if (novoGolsVis === "" && gols_vis.value === "number")
+        {alert("O campo Gols Visitantes é obrigatório.");
+        return;
+      }
+        let novoChutesVis = chutes_vis.value;
+        if (novoChutesVis === "" && chutes_vis.value === "number")
+        {alert("O campo Chutes Visitantes é obrigatório.");
+        return;
+      }
+        let novoEscanteioVis = escanteio_vis.value;
+        if (novoEscanteioVis === "" && escanteio_vis.value === "number")
+        {alert("O campo Escanteio Visitantes é obrigatório.");
+        return;
+      }
+        let novoFaltasVis = faltas_vis.value;
+        if (novoFaltasVis === "" && faltas_vis.value === "number")
+        {alert("O campo Faltas Visitante é obrigatório.");
+        return;
+      }
+        let novoAmareloVis = amarelo_vis.value;
+        if (novoAmareloVis === "" && amarelo_vis.value === "number")
+        {alert("O campo Cartões Amarelos Visitante é obrigatório.");
+        return;
+      }
+        let novoVermelhoVis = vermelho_vis.value;
+        if (novoVermelhoVis === "" && vermelho_vis.value === "number")
+        {alert("O campo Cartões Vermelhos Visitantes.");
+        return;
+      }
+        let novoRodada = rodada.value;
+        if (novoRodada === "" && rodada.value === "number")
+        {alert("O Número da Rodada é obrigatório.");
+        return;
+      }
+
+
+        if(key){
+          dados[key] = {
+            nome_casa: novoNomeCasa, 
+            gols_casa: novoGolsCasa, 
+            chutes_casa: novoChutesCasa, 
+            escanteio_casa: novoEscanteioCasa,
+            faltas_casa: novoFaltasCasa, 
+            amarelo_casa: novoAmareloCasa, 
+            vermelho_casa: novoVermelhoCasa,
+            nome_vis: novoNomeVis, 
+            gols_vis: novoGolsVis, 
+            chutes_vis: novoChutesVis, 
+            escanteio_vis: novoEscanteioVis,
+            faltas_vis: novoFaltasVis, 
+            amarelo_vis: novoAmareloVis, 
+            vermelho_vis: novoVermelhoVis,
+            rodada : novoRodada
+          };
+        }
+        else{
+          dados.push({
+            nome_casa: novoNomeCasa, 
+            gols_casa: novoGolsCasa, 
+            chutes_casa: novoChutesCasa, 
+            escanteio_casa: novoEscanteioCasa,
+            faltas_casa: novoFaltasCasa, 
+            amarelo_casa: novoAmareloCasa, 
+            vermelho_casa: novoVermelhoCasa,
+            nome_vis: novoNomeVis, 
+            gols_vis: novoGolsVis, 
+            chutes_vis: novoChutesVis, 
+            escanteio_vis: novoEscanteioVis,
+            faltas_vis: novoFaltasVis, 
+            amarelo_vis: novoAmareloVis, 
+            vermelho_vis: novoVermelhoVis,
+            rodada: novoRodada
+          });
+        }
+
+        localStorage.setItem('dados', JSON.stringify(dados));
+        window.location.href = "./index.html";
+    }
+
+    function atualizarRodada() {
+      var maxRodada = 0;
+      for (var i = 0; i < dados.length; i++) {
+      if (dados[i].rodada > maxRodada) {
+      maxRodada = dados[i].rodada;
+    }
+  }
+  rodada.value = maxRodada + 1;
+}
+
+    if(key){
+      nome_casa.value = dados[key].nome_casa;
+      gols_casa.value = dados[key].gols_casa;
+      chutes_casa.value = dados[key].chutes_casa;
+      escanteio_casa.value = dados[key].escanteio_casa;
+      faltas_casa.value = dados[key].faltas_casa;
+      amarelo_casa.value = dados[key].amarelo_casa;
+      vermelho_casa.value = dados[key].vermelho_casa;
+      nome_vis.value = dados[key].nome_vis;
+      gols_vis.value = dados[key].gols_vis;
+      chutes_vis.value = dados[key].chutes_vis;
+      escanteio_vis.value = dados[key].escanteio_vis;
+      faltas_vis.value = dados[key].faltas_vis;
+      amarelo_vis.value = dados[key].amarelo_vis;
+      vermelho_vis.value = dados[key].vermelho_vis;
+      rodada.value = dados[key].rodada;
+    }
+  </script>
+
+</body>
+</html>

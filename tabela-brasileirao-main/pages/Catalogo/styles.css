@@ -1,0 +1,41 @@
+.team-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 4rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.team-container:hover {
+  padding: 8rem 10rem;
+  border: 1px solid #C7FE00;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+@media (max-width: 1020px) {
+  .grid-container {
+    grid-template-columns: auto auto auto;
+  }
+
+  .team-container:hover {
+    padding: 6rem 8rem;
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: auto auto;
+  }
+
+  .team-container:hover {
+    padding: 6rem 8rem;
+    opacity: 0.8;
+  }
+}

@@ -1,0 +1,51 @@
+.container{
+    margin-top: 200px;
+    margin: 100px 100px;
+    display: flex;
+    align-items: center;
+}
+
+.botao{
+    padding: 20px;
+    background-color: #C7FE00;
+    color: black;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.input-container{
+    /* gap: 30px; */
+    font-size: 20px;
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.input-container div{
+    gap: 2px;
+    padding: 10px 38px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    width: 100%
+}
+
+.input-container div:last-child{
+    border-left: 2px solid black;
+}
+
+
+form{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.text-input{
+    width: 100%;
+}
+
+.rodada{
+    margin: 10px;
+    font-size: 20px;
+}

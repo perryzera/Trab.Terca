@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../globals.css">
+  <link rel="stylesheet" href="./styles.css">
+  <!-- FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&display=swap" rel="stylesheet">
+
+  <title>Campeonato Brasileiro | Tabela</title>
+</head>
+<body>
+  <header>
+    <nav>
+        <a href="../index.html"><img src="../../assets/logo.png" alt="Logo Brasileirao"></a>
+        <ul>
+          <li><a href="../Tabela/index.html">Tabela</a></li>
+          <li><a href="../Catalogo/index.html">Times</a></li>
+          <li><a href="../Formulario/index.html">Cadastro Rodada</a></li>
+        </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="container">
+      
+      <h1>Tabela do Campeonato</h1>
+
+      <table class="tabela-resultados" border="1" cellpadding="10" cellspacing="0">
+        <tr>
+          <th>Equipe da Casa</th>
+          <th>Gols Casa</th>
+          <th>Chutes a Gol Casa</th>
+          <th>Escanteio Casa</th>
+          <th>Faltas Casa</th>
+          <th>Cartão Amarelo Casa</th>
+          <th>Cartão Vermelho Casa</th>
+          
+          <th>Equipe Visitante</th>
+          <th>Gols Visitante</th>
+          <th>Chutes a Gol Visitante</th>
+          <th>Escanteio Visitante</th>
+          <th>Faltas Visitante</th>
+          <th>Cartão Amarelo Visitante</th>
+          <th>Cartão Vermelho Visitante</th>
+          <th>Rodada</th>
+          <th>Ações</th>
+        </tr>
+        <tbody id="tabela-corpo">
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <script>
+    var dados = JSON.parse(localStorage.getItem('dados')) || [];
+
+      var i = 0;
+
+      while (i < dados.length) {
+        i++;
+        
+  console.log(dados[i]);
+}
+
+    function carregarTabela() {
+      var tabelaCorpo = document.getElementById('tabela-corpo');
+
+      tabelaCorpo.innerHTML = '';
+
+      for (var i = 0; i < dados.length; i++) {
+        var linha = document.createElement('tr');
+
+        var colunaEquipeCasa = criarColuna(dados[i].nome_casa);
+        var colunaGolsCasa = criarColuna(dados[i].gols_casa);
+        var colunaChutesCasa = criarColuna(dados[i].chutes_casa);
+        var colunaEscanteioCasa = criarColuna(dados[i].escanteio_casa);
+        var colunaFaltasCasa = criarColuna(dados[i].faltas_casa);
+        var colunaAmareloCasa = criarColuna(dados[i].amarelo_casa);
+        var colunaVermelhoCasa = criarColuna(dados[i].vermelho_casa);
+
+        var colunaEquipeVisitante = criarColuna(dados[i].nome_vis);
+        var colunaGolsVisitante = criarColuna(dados[i].gols_vis);
+        var colunaChutesVisitante = criarColuna(dados[i].chutes_vis);
+        var colunaEscanteioVisitante = criarColuna(dados[i].escanteio_vis);
+        var colunaFaltasVisitante = criarColuna(dados[i].faltas_vis);
+        var colunaAmareloVisitante = criarColuna(dados[i].amarelo_vis);
+        var colunaVermelhoVisitante = criarColuna(dados[i].vermelho_vis);
+
+        var colunaRodada = criarColuna(dados[i].rodada);
+        
+        var colunaAcoes = document.createElement('td');
+        var botaoRemover = document.createElement('button');
+        botaoRemover.textContent = 'Remover';
+        botaoRemover.addEventListener('click', (function(index) {
+          return function() {
+            remover(index);
+          };
+        })(i));
+        colunaAcoes.appendChild(botaoRemover);
+
+        linha.appendChild(colunaEquipeCasa);
+        linha.appendChild(colunaGolsCasa);
+        linha.appendChild(colunaChutesCasa);
+        linha.appendChild(colunaEscanteioCasa);
+        linha.appendChild(colunaFaltasCasa);
+        linha.appendChild(colunaAmareloCasa);
+        linha.appendChild(colunaVermelhoCasa);
+
+        linha.appendChild(colunaEquipeVisitante);
+        linha.appendChild(colunaGolsVisitante);
+        linha.appendChild(colunaChutesVisitante);
+        linha.appendChild(colunaEscanteioVisitante);
+        linha.appendChild(colunaFaltasVisitante);
+        linha.appendChild(colunaAmareloVisitante);
+        linha.appendChild(colunaVermelhoVisitante);
+
+        linha.appendChild(colunaRodada);
+        linha.appendChild(colunaAcoes);
+
+        tabelaCorpo.appendChild(linha);
+      }
+    }
+
+    function criarColuna(dado) {
+      var coluna = document.createElement('td');
+      coluna.textContent = dado;
+      return coluna;
+    }
+
+    function remover(chave) {
+      dados.splice(chave, 1);
+      localStorage.setItem('dados', JSON.stringify(dados));
+      carregarTabela();
+    }
+
+    carregarTabela();
+  </script>
+</body>
+</html>
